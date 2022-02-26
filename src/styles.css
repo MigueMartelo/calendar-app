@@ -60,6 +60,6 @@ body {
   outline: none;
 }
 
-.react-datetime-picker_wrapper {
+.react-datetime-picker__wrapper {
   border: 0px solid gray !important;
 }

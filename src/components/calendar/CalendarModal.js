@@ -22,18 +22,45 @@ export const CalendarModal = () => {
   const [dateStart, setDateStart] = useState(now.toDate());
   const [dateEnd, setDateEnd] = useState(now.clone().add(1, 'hours').toDate());
 
+  const [formValues, setFormValues] = useState({
+    title: 'Evento',
+    notes: '',
+    start: now.toDate(),
+    end: now.clone().add(1, 'hours').toDate(),
+  });
+
+  const { notes, title } = formValues;
+
+  const handleInputChange = ({ target }) => {
+    setFormValues({
+      ...formValues,
+      [target.name]: target.value,
+    });
+  };
+
   const closeModal = () => {
     console.log('closing...');
   };
 
   const handleStartDateChange = (e) => {
     setDateStart(e);
-    console.log(e);
+    setFormValues({
+      ...formValues,
+      start: e,
+    });
   };
 
   const handleEndDateChange = (e) => {
     setDateEnd(e);
-    console.log(e);
+    setFormValues({
+      ...formValues,
+      end: e,
+    });
+  };
+
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    console.log(formValues);
   };
 
   return (
@@ -47,7 +74,7 @@ export const CalendarModal = () => {
     >
       <h1> Nuevo evento </h1>
       <hr />
-      <form className='container'>
+      <form className='container' onSubmit={handleSubmitForm}>
         <div className='form-group'>
           <label>Fecha y hora inicio</label>
           <DateTimePicker
@@ -75,6 +102,8 @@ export const CalendarModal = () => {
             className='form-control'
             placeholder='Título del evento'
             name='title'
+            value={title}
+            onChange={handleInputChange}
             autoComplete='off'
           />
           <small id='emailHelp' className='form-text text-muted'>
@@ -89,6 +118,8 @@ export const CalendarModal = () => {
             placeholder='Notas'
             rows='5'
             name='notes'
+            value={notes}
+            onChange={handleInputChange}
           ></textarea>
           <small id='emailHelp' className='form-text text-muted'>
             Información adicional
