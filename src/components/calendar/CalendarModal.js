@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { uiCloseModal } from '../../actions/ui';
+import { eventAddNew } from '../../actions/events';
 
 const customStyles = {
   content: {
@@ -82,6 +83,16 @@ export const CalendarModal = () => {
     }
 
     //TODO: realizar grabación DB
+    dispatch(
+      eventAddNew({
+        ...formValues,
+        id: new Date().getTime(),
+        user: {
+          _id: '123',
+          name: 'MigueMartelo',
+        },
+      })
+    );
 
     setTitleValid(true);
     closeModal();
